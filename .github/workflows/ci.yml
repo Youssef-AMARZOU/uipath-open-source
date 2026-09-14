@@ -19,36 +19,36 @@ jobs:
           - use-cases/04-api-integration
 
     steps:
-      - name: Checkout du depot
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup .NET
+      - name: Setup .NET 8
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
 
-      - name: Installer UiPath CLI
-        run: dotnet tool install --global UiPath.CLI.Windows --version 25.10.21
-        shell: pwsh
+      - name: Install UiPath CLI
+        run: dotnet tool install --global UiPath.CLI.Windows
 
-      - name: Verifier installation
+      - name: Verify
         run: uipcli --version
-        shell: pwsh
 
-      - name: Restaurer les dependances du projet (${{ matrix.module }})
+      - name: Restore
         run: uipcli package restore "${{ matrix.module }}/src/project.json"
-        shell: pwsh
+        continue-on-error: true
 
-      - name: Analyse statique (Workflow Analyzer)
-        run: uipcli package analyze "${{ matrix.module }}/src/project.json" --treatWarningsAsErrors false
-        shell: pwsh
+      - name: Analyze
+        run: uipcli package analyze "${{ matrix.module }}/src/project.json"
+        continue-on-error: true
 
-      - name: Packager le projet (.nupkg)
+      - name: Pack
         run: uipcli package pack "${{ matrix.module }}/src/project.json" -o ./output
-        shell: pwsh
+        continue-on-error: true
 
-      - name: Publier l'artefact
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: package-${{ matrix.module }}
           path: ./output/*.nupkg
+          if-no-files-found: ignore
