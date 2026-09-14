@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-analyze:
-    runs-on: windows-latest
+  validate:
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
@@ -23,33 +23,82 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup .NET 8
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.0.x'
+      - name: Validate project structure
+        run: |
+          echo "Checking module: ${{ matrix.module }}"
+          
+          # Check required files exist
+          for f in README.md docs/PDD.md docs/SDD.md src/Main.xaml src/project.json src/Config/README.md; do
+            if [ ! -f "${{ matrix.module }}/$f" ]; then
+              echo "ERROR: Missing $f"
+              exit 1
+            fi
+            echo "OK: $f"
+          done
+          
+          # Check Framework files
+          for f in InitAllSettings.xaml GetTransactionData.xaml Process.xaml SetTransactionStatus.xaml EndProcess.xaml; do
+            if [ ! -f "${{ matrix.module }}/src/Framework/$f" ]; then
+              echo "ERROR: Missing Framework/$f"
+              exit 1
+            fi
+            echo "OK: Framework/$f"
+          done
+          
+          echo "All required files present"
 
-      - name: Install UiPath CLI
-        run: dotnet tool install --global UiPath.CLI.Windows
+      - name: Validate XAML syntax
+        run: |
+          echo "Validating XAML files..."
+          errors=0
+          for f in $(find ${{ matrix.module }} -name "*.xaml"); do
+            if python3 -c "import xml.etree.ElementTree as ET; ET.parse('$f')" 2>/dev/null; then
+              echo "OK: $f"
+            else
+              echo "ERROR: Invalid XML in $f"
+              errors=$((errors + 1))
+            fi
+          done
+          if [ $errors -gt 0 ]; then
+            echo "Found $errors invalid XAML files"
+            exit 1
+          fi
+          echo "All XAML files valid"
 
-      - name: Verify
-        run: uipcli --version
+      - name: Validate project.json
+        run: |
+          echo "Validating project.json..."
+          if python3 -c "import json; json.load(open('${{ matrix.module }}/src/project.json'))" 2>/dev/null; then
+            echo "OK: Valid JSON"
+          else
+            echo "ERROR: Invalid JSON in project.json"
+            exit 1
+          fi
+          
+          # Check required fields
+          name=$(python3 -c "import json; print(json.load(open('${{ matrix.module }}/src/project.json')).get('name', ''))")
+          if [ -z "$name" ]; then
+            echo "ERROR: Missing 'name' field in project.json"
+            exit 1
+          fi
+          echo "OK: project.json has name: $name"
 
-      - name: Restore
-        run: uipcli package restore "${{ matrix.module }}/src/project.json"
-        continue-on-error: true
+      - name: Check for mojibake
+        run: |
+          echo "Checking for mojibake..."
+          if grep -rP '[\x{4e00}-\x{9fff}\x{3040}-\x{309f}\x{30a0}-\x{30ff}]' ${{ matrix.module }} 2>/dev/null; then
+            echo "ERROR: Mojibake detected"
+            exit 1
+          fi
+          echo "OK: No mojibake found"
 
-      - name: Analyze
-        run: uipcli package analyze "${{ matrix.module }}/src/project.json"
-        continue-on-error: true
-
-      - name: Pack
-        run: uipcli package pack "${{ matrix.module }}/src/project.json" -o ./output
-        continue-on-error: true
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: package-${{ matrix.module }}
-          path: ./output/*.nupkg
-          if-no-files-found: ignore
+      - name: Summary
+        run: |
+          echo "## Validation Summary for ${{ matrix.module }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Check | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Project structure | ✅ Pass |" >> $GITHUB_STEP_SUMMARY
+          echo "| XAML syntax | ✅ Pass |" >> $GITHUB_STEP_SUMMARY
+          echo "| project.json | ✅ Pass |" >> $GITHUB_STEP_SUMMARY
+          echo "| No mojibake | ✅ Pass |" >> $GITHUB_STEP_SUMMARY
