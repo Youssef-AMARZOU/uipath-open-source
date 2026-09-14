@@ -4,7 +4,7 @@ Automatisation du tri, de la classification et de la reponse automatique a des e
 
 ## Description
 
-Ce module connecte a une boite mail (IMAP ou Outlook), lit les e-mails entrants, les classifie selon des regles metier (mot-cles, expediteur, presence de pieces jointes), et envoie des reponses automatiques预definies.
+Ce module connecte a une boite mail (IMAP ou Outlook), lit les e-mails entrants, les classifie selon des regles metier (mot-cles, expediteur, presence de pieces jointes), et envoie des reponses automatiques predefinies.
 
 ## Pre-requis
 

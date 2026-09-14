@@ -10,7 +10,7 @@ Automatiser le tri, la classification et la reponse automatique a des e-mails en
 - Connexion a une boite mail via IMAP ou Outlook
 - Lecture des e-mails non lus
 - Classification par mot-cles dans l'objet, expediteur, ou presence de pieces jointes
-- Envoi de reponses automatiques预definies
+- Envoi de reponses automatiques predefinies
 - Deplacement des e-mails traites vers un dossier dedie
 
 **Hors perimetre :**
