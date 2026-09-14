@@ -1,0 +1,19 @@
+{
+  "name": "03-email-automation",
+  "projectId": "191e9a69-3549-4a03-9c3c-88602f17bf64",
+  "description": "Email Automation - Tri and auto-reply to emails",
+  "main": "src/Main.xaml",
+  "dependencies": {
+    "UiPath.Workflow": "[24.10.0]",
+    "UiPath.Excel.Activities": "[2.22.0]",
+    "UiPath.System.Activities": "[24.10.0]"
+  },
+  "webLinks": {},
+  "entryPoints": [],
+  "templateProjectsData": {},
+  "publishOptions": {
+    "includedScreenshots": "Empty"
+  },
+  "schemaVersion": "4.0",
+  "studioVersion": "24.10.0"
+}

@@ -1,0 +1,19 @@
+{
+  "name": "02-web-scraping",
+  "projectId": "62f0b969-0423-4365-b083-e320f4c7c2a2",
+  "description": "Web Scraping - Extract public data from websites",
+  "main": "src/Main.xaml",
+  "dependencies": {
+    "UiPath.Workflow": "[24.10.0]",
+    "UiPath.Excel.Activities": "[2.22.0]",
+    "UiPath.System.Activities": "[24.10.0]"
+  },
+  "webLinks": {},
+  "entryPoints": [],
+  "templateProjectsData": {},
+  "publishOptions": {
+    "includedScreenshots": "Empty"
+  },
+  "schemaVersion": "4.0",
+  "studioVersion": "24.10.0"
+}
