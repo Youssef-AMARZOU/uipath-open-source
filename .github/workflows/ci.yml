@@ -22,27 +22,29 @@ jobs:
       - name: Checkout du depot
         uses: actions/checkout@v4
 
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
       - name: Installer UiPath CLI
-        run: |
-          nuget install UiPath.CLI.Windows -Version 24.10.0 -OutputDirectory .uipcli -Source https://www.myget.org/F/uipath-dev/api/v3/index.json
+        run: dotnet tool install --global UiPath.CLI.Windows --version 25.10.21
+        shell: pwsh
+
+      - name: Verifier installation
+        run: uipcli --version
         shell: pwsh
 
       - name: Restaurer les dependances du projet (${{ matrix.module }})
-        run: |
-          $uipcli = Get-ChildItem -Path .uipcli -Recurse -Filter uipcli.exe | Select-Object -First 1
-          & $uipcli.FullName package restore "${{ matrix.module }}/src/project.json"
+        run: uipcli package restore "${{ matrix.module }}/src/project.json"
         shell: pwsh
 
       - name: Analyse statique (Workflow Analyzer)
-        run: |
-          $uipcli = Get-ChildItem -Path .uipcli -Recurse -Filter uipcli.exe | Select-Object -First 1
-          & $uipcli.FullName package analyze "${{ matrix.module }}/src/project.json" --treatWarningsAsErrors false
+        run: uipcli package analyze "${{ matrix.module }}/src/project.json" --treatWarningsAsErrors false
         shell: pwsh
 
       - name: Packager le projet (.nupkg)
-        run: |
-          $uipcli = Get-ChildItem -Path .uipcli -Recurse -Filter uipcli.exe | Select-Object -First 1
-          & $uipcli.FullName package pack "${{ matrix.module }}/src/project.json" -o ./output
+        run: uipcli package pack "${{ matrix.module }}/src/project.json" -o ./output
         shell: pwsh
 
       - name: Publier l'artefact
