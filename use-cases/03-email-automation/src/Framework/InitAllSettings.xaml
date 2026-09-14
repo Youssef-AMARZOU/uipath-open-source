@@ -1,0 +1,20 @@
+<Activity mc:Ignorable="sap sap2010 sads" x:Class="InitAllSettings"
+         xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+         xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+         xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+         xmlns:ui="http://schemas.uipath.com/workflow/activities"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <Sequence x:Name="Init_Sequence" DisplayName="Init - Charge Config, connexion mail">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="MailServer" />
+      <Variable x:TypeArguments="x:Int32" Name="Port" />
+    </Sequence.Variables>
+
+    <ui:LogMessage DisplayName="Init"
+                   Level="Info"
+                   Message="Chargement de la configuration email..." />
+  </Sequence>
+</Activity>

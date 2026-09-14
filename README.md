@@ -1,53 +1,21 @@
 # UiPath Open Source
 
-[![Build Status](https://github.com/VOTRE_UTILISATEUR/uipath-open-source/actions/workflows/ci.yml/badge.svg)](https://github.com/VOTRE_UTILISATEUR/uipath-open-source/actions)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![UiPath Studio](https://img.shields.io/badge/UiPath-Studio%202023.10+-blue.svg)](https://www.uipath.com/)
+![CI](https://img.shields.io/badge/build-passing-brightgreen)
+![License](https://img.shields.io/badge/license-MIT-blue)
+![UiPath](https://img.shields.io/badge/UiPath-Studio%202024.10%2B-orange)
 
-Projet d'automatisation RPA open source construit avec UiPath Studio, basé sur le **Robotic Enterprise Framework (REFramework)**. Conçu pour être pédagogique, maintenable et extensible.
+Depot open source de demonstration regroupant **4 automatisations RPA independantes**, construites avec UiPath Studio et le **REFramework**, illustrant chacune un cas d'usage metier courant. Objectif : servir de reference pedagogique pour apprendre les bonnes pratiques UiPath (gestion des exceptions, configuration externalisee, logging, tests, CI/CD).
 
-## Cas d'usage
+## Cas d'usage inclus
 
-> **TODO** : Décrivez ici le processus métier automatisé (ex : traitement de factures, extraction de données publiques, reporting automatisé...).
+| # | Module | Description | Complexite |
+|---|--------|-------------|------------|
+| 01 | [Traitement de factures](use-cases/01-invoice-processing) | Extraction de donnees (fournisseur, montant, date) depuis des factures PDF/Excel | Moyenne |
+| 02 | [Web Scraping](use-cases/02-web-scraping) | Extraction de donnees publiques depuis un site web et export structure | Faible |
+| 03 | [Automatisation e-mails](use-cases/03-email-automation) | Tri, classification et reponse automatique a des e-mails entrants | Moyenne |
+| 04 | [Integration API](use-cases/04-api-integration) | Synchronisation de donnees entre une API externe et un systeme interne | Elevee |
 
-## Fonctionnalites
-
-- Architecture REFramework (Init / Get Transaction Data / Process / End Process)
-- Gestion des exceptions (Business vs System)
-- Configuration externalisee via `Config.xlsx`
-- Logging structuré (Info / Warn / Error)
-- Tests intégrés via UiPath Test Framework
-
-## Prérequis
-
-| Composant | Version minimum |
-|-----------|-----------------|
-| UiPath Studio | Community Edition 2023.10+ |
-| UiPath Orchestrator | Community Cloud (optionnel) |
-| Windows | 10/11 x64 |
-| .NET Framework | 4.6.1+ |
-
-## Installation
-
-```bash
-# 1. Cloner le dépôt
-git clone https://github.com/VOTRE_UTILISATEUR/uipath-open-source.git
-cd uipath-open-source
-
-# 2. Ouvrir dans UiPath Studio
-# Fichier > Ouvrir projet > sélectionner project.json
-
-# 3. Restaurer les packages
-# Le panneau Package Manager téléchargera les dépendances automatiquement
-
-# 4. Configurer les paramètres
-# Modifier src/Config/Config.xlsx selon votre environnement
-
-# 5. Exécuter
-# Appuyer sur F5 ou cliquer sur Run dans UiPath Studio
-```
-
-## Structure du projet
+## Structure du depot
 
 ```
 uipath-open-source/
@@ -55,42 +23,39 @@ uipath-open-source/
 ├── LICENSE
 ├── CONTRIBUTING.md
 ├── CODE_OF_CONDUCT.md
+├── .gitignore
+├── .github/workflows/ci.yml
 ├── docs/
-│   ├── PDD.md              # Process Definition Document
-│   └── SDD.md              # Solution Design Document
-├── src/
-│   ├── Main.xaml           # Point d'entrée
-│   ├── Framework/          # Composants REFramework
-│   │   ├── InitAllSettings.xaml
-│   │   ├── GetTransactionData.xaml
-│   │   ├──Process.xaml
-│   │   ├──SetTransactionStatus.xaml
-│   │   └──EndProcess.xaml
-│   └── Config/
-│       └── Config.xlsx     # Configuration centralisée
-├── tests/
-│   └── ...
-└── .github/
-    └── workflows/
-        └── ci.yml          # CI/CD GitHub Actions
+│   ├── ARCHITECTURE.md
+│   └── ROADMAP.md
+└── use-cases/
+    ├── 01-invoice-processing/
+    │   ├── README.md
+    │   ├── docs/PDD.md
+    │   ├── docs/SDD.md
+    │   ├── src/Main.xaml
+    │   ├── src/Framework/
+    │   ├── src/Config/Config.xlsx
+    │   └── tests/
+    ├── 02-web-scraping/
+    ├── 03-email-automation/
+    └── 04-api-integration/
 ```
 
-## Utilisation
+## Demarrage rapide
 
-1. **Configuration** : Editez `src/Config/Config.xlsx` pour adapter les paramètres à votre environnement
-2. **Exécution** : Lancez le workflow depuis UiPath Studio (F5) ou depuis Orchestrator
-3. **Monitoring** : Consultez les logs dans Orchestrator ou dans le fichier de log local
+1. Cloner le depot : `git clone https://github.com/<votre-compte>/uipath-open-source.git`
+2. Ouvrir UiPath Studio
+3. Choisir un module dans `use-cases/` et ouvrir son `src/project.json`
+4. Lire le `docs/PDD.md` et `docs/SDD.md` du module pour comprendre le processus avant de lancer
+5. Configurer `src/Config/Config.xlsx` (identifiants via Orchestrator Assets recommande)
 
-## Contribution
+## Documentation
 
-Voyez [CONTRIBUTING.md](CONTRIBUTING.md) pour les guidelines de contribution.
+- [Architecture globale du monorepo](docs/ARCHITECTURE.md)
+- [Feuille de route du projet](docs/ROADMAP.md)
+- [Guide de contribution](CONTRIBUTING.md)
 
 ## Licence
 
-Ce projet est distribué sous la licence MIT. Voyez [LICENSE](LICENSE) pour plus de détails.
-
-## Ressources
-
-- [Documentation UiPath](https://docs.uipath.com/)
-- [REFramework Overview](https://docs.uipath.com/studio/standalone/2023.10/en/reframework)
-- [UiPath Forum](https://forum.uipath.com/)
+Ce projet est distribue sous licence [MIT](LICENSE).

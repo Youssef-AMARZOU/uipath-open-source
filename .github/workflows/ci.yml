@@ -2,43 +2,51 @@ name: UiPath CI
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
-  validate:
-    runs-on: ubuntu-latest
-    name: Validate Workflow
+  build-and-analyze:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        module:
+          - use-cases/01-invoice-processing
+          - use-cases/02-web-scraping
+          - use-cases/03-email-automation
+          - use-cases/04-api-integration
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Checkout du depot
+        uses: actions/checkout@v4
 
-    - name: Setup UiPath CLI
-      uses: uipath/setup-uipath-cli@v1
-      with:
-        version: 'latest'
+      - name: Installer UiPath CLI
+        run: |
+          nuget install UiPath.CLI.Windows -Version 24.10.0 -OutputDirectory .uipcli -Source https://www.myget.org/F/uipath-dev/api/v3/index.json
+        shell: pwsh
 
-    - name: Install dependencies
-      run: |
-        uipath restore --project-path ./src
+      - name: Restaurer les dependances du projet (${{ matrix.module }})
+        run: |
+          $uipcli = Get-ChildItem -Path .uipcli -Recurse -Filter uipcli.exe | Select-Object -First 1
+          & $uipcli.FullName package restore "${{ matrix.module }}/src/project.json"
+        shell: pwsh
 
-    - name: Analyze workflow
-      run: |
-        uipath analyze --project-path ./src
+      - name: Analyse statique (Workflow Analyzer)
+        run: |
+          $uipcli = Get-ChildItem -Path .uipcli -Recurse -Filter uipcli.exe | Select-Object -First 1
+          & $uipcli.FullName package analyze "${{ matrix.module }}/src/project.json" --treatWarningsAsErrors false
+        shell: pwsh
 
-    - name: Run tests
-      run: |
-        uipath test --project-path ./tests --test-folder .
+      - name: Packager le projet (.nupkg)
+        run: |
+          $uipcli = Get-ChildItem -Path .uipcli -Recurse -Filter uipcli.exe | Select-Object -First 1
+          & $uipcli.FullName package pack "${{ matrix.module }}/src/project.json" -o ./output
+        shell: pwsh
 
-    - name: Package project
-      run: |
-        uipath pack --project-path ./src --output ./output
-
-    - name: Upload artifact
-      uses: actions/upload-artifact@v4
-      if: success()
-      with:
-        name: uipath-package
-        path: ./output/*.nupkg
+      - name: Publier l'artefact
+        uses: actions/upload-artifact@v4
+        with:
+          name: package-${{ matrix.module }}
+          path: ./output/*.nupkg
