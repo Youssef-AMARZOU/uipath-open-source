@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010 sads" x:Class="Main"
+<Activity mc:Ignorable="sap sap2010 sads" x:Class="Workflow"
          xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
          xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
@@ -10,30 +10,10 @@
   <Sequence x:Name="Main_Sequence" DisplayName="Main - API Integration">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="ConfigPath" />
-      <Variable x:TypeArguments="x:String" Name="AccessToken" />
     </Sequence.Variables>
 
-    <ui:LogMessage DisplayName="Demarrage API integration"
+    <ui:LogMessage DisplayName="Log"
                    Level="Info"
-                   Message="[String.Format(\"API integration demarre a {0}\", DateTime.Now.ToString())]" />
-
-    <ui:InvokeWorkflowFile DisplayName="InitAllSettings"
-                           FileName="Framework/InitAllSettings.xaml" />
-
-    <ui:InvokeWorkflowFile DisplayName="GetTransactionData"
-                           FileName="Framework/GetTransactionData.xaml" />
-
-    <ui:InvokeWorkflowFile DisplayName="ProcessAPI"
-                           FileName="Framework/Process.xaml" />
-
-    <ui:InvokeWorkflowFile DisplayName="SetTransactionStatus"
-                           FileName="Framework/SetTransactionStatus.xaml" />
-
-    <ui:InvokeWorkflowFile DisplayName="EndProcess"
-                           FileName="Framework/EndProcess.xaml" />
-
-    <ui:LogMessage DisplayName="Termine"
-                   Level="Info"
-                   Message="[String.Format(\"API integration termine a {0}\", DateTime.Now.ToString())]" />
+                   Message="Process started" />
   </Sequence>
 </Activity>

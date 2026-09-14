@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010 sads" x:Class="SetTransactionStatus"
+<Activity mc:Ignorable="sap sap2010 sads" x:Class="Workflow"
          xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
          xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
@@ -7,14 +7,14 @@
          xmlns:ui="http://schemas.uipath.com/workflow/activities"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-  <Sequence x:Name="SetStatus_Sequence" DisplayName="SetTransactionStatus - Success/Business/System">
+  <Sequence x:Name="Main_Sequence" DisplayName="SetTransactionStatus">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="TransactionStatus" />
       <Variable x:TypeArguments="x:String" Name="ErrorMessage" />
     </Sequence.Variables>
 
-    <ui:LogMessage DisplayName="SetStatus"
+    <ui:LogMessage DisplayName="Log"
                    Level="Info"
-                   Message="[String.Format(\"Statut: {0}\", TransactionStatus)]" />
+                   Message="Process started" />
   </Sequence>
 </Activity>

@@ -16,6 +16,6 @@
 
     <ui:LogMessage DisplayName="Init"
                    Level="Info"
-                   Message="Chargement de la configuration API..." />
+                   Message="Log message" />
   </Sequence>
 </Activity>

@@ -15,6 +15,6 @@
 
     <ui:LogMessage DisplayName="Process"
                    Level="Info"
-                   Message="Extraction des donnees depuis le site web..." />
+                   Message="Log message" />
   </Sequence>
 </Activity>

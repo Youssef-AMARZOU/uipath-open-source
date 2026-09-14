@@ -16,6 +16,6 @@
 
     <ui:LogMessage DisplayName="Process"
                    Level="Info"
-                   Message="Classification et traitement de l'e-mail..." />
+                   Message="Log message" />
   </Sequence>
 </Activity>

@@ -15,6 +15,6 @@
 
     <ui:LogMessage DisplayName="GetTransactionData"
                    Level="Info"
-                   Message="Recherche des factures PDF dans Input/..." />
+                   Message="Log message" />
   </Sequence>
 </Activity>

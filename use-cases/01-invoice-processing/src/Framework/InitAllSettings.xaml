@@ -16,6 +16,6 @@
 
     <ui:LogMessage DisplayName="Init"
                    Level="Info"
-                   Message="Chargement de la configuration factures..." />
+                   Message="Log message" />
   </Sequence>
 </Activity>

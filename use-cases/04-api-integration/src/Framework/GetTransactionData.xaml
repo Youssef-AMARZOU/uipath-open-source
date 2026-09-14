@@ -15,6 +15,6 @@
 
     <ui:LogMessage DisplayName="GetTransactionData"
                    Level="Info"
-                   Message="Preparation de la pagination API..." />
+                   Message="Log message" />
   </Sequence>
 </Activity>

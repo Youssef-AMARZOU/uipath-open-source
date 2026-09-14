@@ -15,6 +15,6 @@
 
     <ui:LogMessage DisplayName="Process"
                    Level="Info"
-                   Message="Appel API et traitement de la reponse..." />
+                   Message="Log message" />
   </Sequence>
 </Activity>

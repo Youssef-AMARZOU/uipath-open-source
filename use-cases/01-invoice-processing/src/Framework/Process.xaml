@@ -21,6 +21,6 @@
 
     <ui:LogMessage DisplayName="Process"
                    Level="Info"
-                   Message="Extraction des donnees de la facture..." />
+                   Message="Log message" />
   </Sequence>
 </Activity>
