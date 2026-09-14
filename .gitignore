@@ -1,0 +1,38 @@
+# UiPath Studio
+.local/
+output/
+project.json
+*.nupkg
+*.snupkg
+nuget.config
+
+# Build artifacts
+*.dll
+*.pdb
+*.cache
+
+# Logs
+*.log
+logs/
+
+# IDE
+.vs/
+.vscode/
+*.suo
+*.user
+*.sln.docstates
+
+# OS
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# Node (pour documentation)
+node_modules/
+package-lock.json
+
+# Credentials
+*.credentials
+*.env
+.env.*

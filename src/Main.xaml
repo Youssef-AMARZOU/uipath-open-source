@@ -1,0 +1,48 @@
+<Activity mc:Ignorable="sap sap2010 sads" x:Class="Main"
+         xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+         xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+         xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+         xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+         xmlns:ui="http://schemas.uipath.com/workflow/activities"
+         xmlns:uip="clr-namespace:UiPath Project;assembly=UiPath Project"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <Sequence x:Name="Main_Sequence" DisplayName="Main" sap2010:WorkflowViewState.IdRef="Main_Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="ConfigPath" />
+      <Variable x:TypeArguments="x:String" Name="TransactionItem" />
+    </Sequence.Variables>
+
+    <ui:LogMessage DisplayName="Demarrage du processus"
+                   Level="Info"
+                   Message="[String.Format("Processus demarre a {0}", DateTime.Now.ToString())]"
+                   sap2010:WorkflowViewState.IdRef="LogMessage_1" />
+
+    <ui:InvokeWorkflowFile DisplayName="Init - Charger Configuration"
+                           FileName="[String.Format("{0}\Framework\InitAllSettings.xaml", Directory.GetCurrentDirectory())]"
+                           sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" />
+
+    <ui:InvokeWorkflowFile DisplayName="Get Transaction Data"
+                           FileName="[String.Format("{0}\Framework\GetTransactionData.xaml", Directory.GetCurrentDirectory())]"
+                           sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" />
+
+    <ui:InvokeWorkflowFile DisplayName="Process Transaction"
+                           FileName="[String.Format("{0}\Framework\Process.xaml", Directory.GetCurrentDirectory())]"
+                           sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" />
+
+    <ui:InvokeWorkflowFile DisplayName="Set Transaction Status"
+                           FileName="[String.Format("{0}\Framework\SetTransactionStatus.xaml", Directory.GetCurrentDirectory())]"
+                           sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" />
+
+    <ui:InvokeWorkflowFile DisplayName="End Process"
+                           FileName="[String.Format("{0}\Framework\EndProcess.xaml", Directory.GetCurrentDirectory())]"
+                           sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" />
+
+    <ui:LogMessage DisplayName="Processus termine"
+                   Level="Info"
+                   Message="[String.Format("Processus termine a {0}", DateTime.Now.ToString())]"
+                   sap2010:WorkflowViewState.IdRef="LogMessage_2" />
+  </Sequence>
+</Activity>

@@ -1,0 +1,34 @@
+<Activity mc:Ignorable="sap sap2010 sads"
+         x:Class="InitAllSettings"
+         xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+         xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+         xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+         xmlns:ui="http://schemas.uipath.com/workflow/activities"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <Sequence x:Name="InitAllSettings_Sequence" DisplayName="Init All Settings"
+            sap2010:WorkflowViewState.IdRef="InitAllSettings_Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="ConfigFilePath" />
+      <Variable x:TypeArguments="x:String" Name="TransactionQueueName" />
+      <Variable x:TypeArguments="x:Int32" Name="MaxRetry" />
+    </Sequence.Variables>
+
+    <ui:LogMessage DisplayName="Initialisation des parametres"
+                   Level="Info"
+                   Message="[String.Format("Debut Init a {0}", DateTime.Now.ToString())]"
+                   sap2010:WorkflowViewState.IdRef="LogMessage_1" />
+
+    <ui:LogMessage DisplayName="Parametres charges"
+                   Level="Info"
+                   Message="[String.Format("ConfigFilePath: {0}", ConfigFilePath)]"
+                   sap2010:WorkflowViewState.IdRef="LogMessage_2" />
+
+    <ui:LogMessage DisplayName="Init terminee"
+                   Level="Info"
+                   Message="Configuration chargee avec succes"
+                   sap2010:WorkflowViewState.IdRef="LogMessage_3" />
+  </Sequence>
+</Activity>

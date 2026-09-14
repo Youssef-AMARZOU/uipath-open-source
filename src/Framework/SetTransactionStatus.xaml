@@ -1,0 +1,29 @@
+<Activity mc:Ignorable="sap sap2010 sads"
+         x:Class="SetTransactionStatus"
+         xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+         xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+         xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+         xmlns:ui="http://schemas.uipath.com/workflow/activities"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <Sequence x:Name="SetTransactionStatus_Sequence" DisplayName="Set Transaction Status"
+            sap2010:WorkflowViewState.IdRef="SetTransactionStatus_Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:Object" Name="TransactionItem" />
+      <Variable x:TypeArguments="x:String" Name="TransactionStatus" />
+      <Variable x:TypeArguments="x:String" Name="ErrorMessage" />
+    </Sequence.Variables>
+
+    <ui:LogMessage DisplayName="Mise a jour du statut"
+                   Level="Info"
+                   Message="[String.Format("Statut: {0}", TransactionStatus)]"
+                   sap2010:WorkflowViewState.IdRef="LogMessage_1" />
+
+    <ui:LogMessage DisplayName="Statut mis a jour"
+                   Level="Info"
+                   Message="Transaction mise a jour"
+                   sap2010:WorkflowViewState.IdRef="LogMessage_2" />
+  </Sequence>
+</Activity>

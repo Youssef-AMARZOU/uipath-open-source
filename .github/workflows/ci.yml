@@ -1,0 +1,44 @@
+name: UiPath CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    name: Validate Workflow
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup UiPath CLI
+      uses: uipath/setup-uipath-cli@v1
+      with:
+        version: 'latest'
+
+    - name: Install dependencies
+      run: |
+        uipath restore --project-path ./src
+
+    - name: Analyze workflow
+      run: |
+        uipath analyze --project-path ./src
+
+    - name: Run tests
+      run: |
+        uipath test --project-path ./tests --test-folder .
+
+    - name: Package project
+      run: |
+        uipath pack --project-path ./src --output ./output
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      if: success()
+      with:
+        name: uipath-package
+        path: ./output/*.nupkg
